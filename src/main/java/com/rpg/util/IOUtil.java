@@ -17,6 +17,10 @@ public class IOUtil {
         return getScanner().nextLine();
     }
 
+    public static int getIntegerInput() {
+        return getScanner().nextInt();
+    }
+
     private static Scanner getScanner() {
         return new Scanner(consoleDisplay.getInputStream());
     }
