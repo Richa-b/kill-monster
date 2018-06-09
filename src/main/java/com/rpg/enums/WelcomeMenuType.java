@@ -1,4 +1,4 @@
-package com.rpg.game;
+package com.rpg.enums;
 
 public enum WelcomeMenuType {
 

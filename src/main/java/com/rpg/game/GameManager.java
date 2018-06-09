@@ -1,32 +1,55 @@
 package com.rpg.game;
 
-import com.rpg.enums.WeaponType;
+import com.rpg.enums.WelcomeMenuType;
 import com.rpg.game.entity.Character;
 import com.rpg.game.entity.Player;
+import com.rpg.game.menuManager.Menu;
+import com.rpg.game.menuManager.WelcomeMenu;
+import com.rpg.util.AsciiArt;
 import com.rpg.util.IOUtil;
 
+import static com.rpg.enums.WelcomeMenuType.EXIT;
 import static com.rpg.game.entity.Monster.createDefaultMonster;
 
-public class Game {
+public class GameManager {
 
     private final Character player;
     private final Character monster;
 
-    public Game(Character player, Character monster) {
+    public GameManager(Character player, Character monster) {
         this.player = player;
         this.monster = monster;
     }
 
+    public static void launchGame() throws Exception {
+        Menu menu = new WelcomeMenu();
+        WelcomeMenuType welcomeMenuType;
+        IOUtil.showMessage(AsciiArt.WELCOME_MESSAGE);
+        do {
+            welcomeMenuType = (WelcomeMenuType) menu.showMenu(null);
+            switch (welcomeMenuType) {
+                case START:
+                    createGame();
+                    break;
+                case EXIT:
+                    exitGame();
+                    break;
+                default:
+                    throw new Exception("Something Unusual Happened!!!");
+            }
+        } while (EXIT != welcomeMenuType);
+    }
+
     public static void createGame() throws Exception {
 
-        Game game = new Game(createPlayer(), createMonster());
+        GameManager game = new GameManager(createPlayer(), createMonster());
         game.welcomePlayerAndShowPowerStats();
         game.startGame();
     }
 
     public void startGame() throws Exception {
-        Fight fight = new Fight(player, monster);
-        fight.startFighting();
+        ActionManager actionManager = new ActionManager(player,monster);
+        actionManager.performOperation();
     }
 
     public static void resumeGame() {
@@ -39,7 +62,7 @@ public class Game {
     }
 
     public static void endGame() {
-        IOUtil.showMessage("You have died.. Game Over");
+        IOUtil.showMessage("You have died.. GameManager Over");
         System.exit(0);
     }
 

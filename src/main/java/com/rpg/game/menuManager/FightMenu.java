@@ -16,7 +16,11 @@ public class FightMenu implements Menu {
         List<Weapon> weapons = player.getWeaponList();
         IOUtil.showMessage("Select a Weapon");
         displayOptions(weapons);
-        return weapons.get(selectOption(weapons) - 1).getWeaponType();
+        Integer selectedOption = selectOption(weapons);
+        if (selectedOption == 0) {
+            return null;
+        }
+        return weapons.get(selectedOption - 1).getWeaponType();
     }
 
     private void displayOptions(List<Weapon> weapons) {
@@ -25,6 +29,7 @@ public class FightMenu implements Menu {
             weaponType = weapons.get(i).getWeaponType();
             IOUtil.showMessage((i + 1) + "." + weaponType.getDisplayName() + " " + weaponType.getAsciiArt() + "\n");
         }
+        IOUtil.showMessage("Press 0 for Save and Exit");
     }
 
 }

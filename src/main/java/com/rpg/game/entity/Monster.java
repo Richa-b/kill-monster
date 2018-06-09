@@ -14,7 +14,7 @@ public class Monster extends Character {
     }
 
     public static Monster createDefaultMonster(){
-        return new Monster("Monster Dinasour","");
+        return new Monster("Monster Dinosaur","");
     }
 
     private void createDefaultWeaponListForMonster() {

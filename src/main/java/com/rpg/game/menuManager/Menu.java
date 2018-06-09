@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface Menu {
 
-    Object showMenu(Player player) throws Exception;
+    Object showMenu(Player player);
 
     default Integer selectOption(List menuItems) {
         int optionSelected;
@@ -20,7 +20,7 @@ public interface Menu {
             } catch (InputMismatchException e) {
                 optionSelected = -1;
             }
-            if (optionSelected <= 0 || optionSelected > menuItems.size()) {
+            if (optionSelected < 0 || optionSelected > menuItems.size()) {
                 IOUtil.showMessage("Invalid Option Selected");
             } else {
                 return optionSelected;

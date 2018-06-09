@@ -7,17 +7,17 @@ import com.rpg.game.menuManager.FightMenu;
 import com.rpg.game.menuManager.Menu;
 import com.rpg.util.IOUtil;
 
-public class Fight {
+public class FightManager {
 
     private final Character player;
     private final Character monster;
 
-    public Fight(Character player, Character monster) {
+    public FightManager(Character player, Character monster) {
         this.player = player;
         this.monster = monster;
     }
 
-    public void startFighting() throws Exception {
+    public void startFighting() {
         Menu menu = new FightMenu();
         do {
             WeaponType weaponType = (WeaponType) menu.showMenu((Player) player);
@@ -26,16 +26,14 @@ public class Fight {
                 attack(weaponType, player, monster);
             }
             if (player.isDead()) {
-                Game.endGame();
+                GameManager.endGame();
             }
         } while (monster.isAlive());
         if (player.isAlive()) {
             ((Player) player).receiveCoins();
             IOUtil.showMessage("Move to Next Level");
         }
-
     }
-
 
     public void attack(WeaponType weaponType, Character enemy, Character attacker) {
         int damage = weaponType.attack();
