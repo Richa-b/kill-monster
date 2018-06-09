@@ -4,11 +4,11 @@ import com.rpg.util.AsciiArt;
 
 public enum WeaponType {
 
-    GUN("Gun", AsciiArt.GUN, "", 0,1),
-    ARROW("Arrow", AsciiArt.ARROW, "", 5,2),
-    KNIFE("Knife", AsciiArt.KNIFE, "", 10,5),
+    GUN("Gun", AsciiArt.GUN, "", 5,1),
+    ARROW("Arrow", AsciiArt.ARROW, "", 10,2),
+    KNIFE("Knife", AsciiArt.KNIFE, "", 15,5),
     SWORD("Sword", AsciiArt.SWORD, "", 25,10),
-    BOMB("Bomb", AsciiArt.BOMB, "", 50,15);
+    BOMB("Bomb", AsciiArt.BOMB, "", 50,20);
 
     private String displayName;
     private String asciiArt;
@@ -34,6 +34,10 @@ public enum WeaponType {
 
     public Integer getStrength() {
         return strength;
+    }
+
+    public int attack(){
+        return (int )(Math.random() * this.getStrength() + 1);
     }
 
     WeaponType(String displayName, String asciiArt, String description, Integer coinsRequired, Integer strength) {

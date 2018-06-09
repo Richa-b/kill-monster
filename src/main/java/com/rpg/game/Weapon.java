@@ -7,6 +7,11 @@ public class Weapon {
     private WeaponType weaponType;
     private Integer count;
 
+    public Weapon(WeaponType weaponType, Integer count) {
+        this.weaponType = weaponType;
+        this.count = count;
+    }
+
     public WeaponType getWeaponType() {
         return weaponType;
     }
