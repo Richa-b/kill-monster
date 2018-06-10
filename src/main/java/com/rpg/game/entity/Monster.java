@@ -8,10 +8,6 @@ import static com.rpg.util.KillMonsterConstants.DEFAULT_LEVEL;
 
 public class Monster extends Character {
 
-    public Monster(String name, String description) {
-        new Monster(name, description, DEFAULT_LEVEL);
-    }
-
     public Monster(String name, String description, Integer level) {
         this.name = name;
         this.description = description;
@@ -20,11 +16,11 @@ public class Monster extends Character {
     }
 
     public void setHp(Integer level) {
-        super.setHp(Integer.max(level * BASE_MONSTER_HP, 100));
+        super.setHp(Integer.min(level * BASE_MONSTER_HP, 100));
     }
 
     public static Monster createDefaultMonster() {
-        return new Monster("Monster Dinosaur", "");
+        return new Monster("Monster Dinosaur", "",DEFAULT_LEVEL);
     }
 
     public void increaseMonsterPowerOnLevelUp(Integer level){

@@ -2,9 +2,11 @@ package com.rpg.game;
 
 import com.rpg.enums.WelcomeMenuType;
 import com.rpg.game.entity.Character;
+import com.rpg.game.entity.Game;
 import com.rpg.game.entity.Player;
 import com.rpg.game.menuManager.Menu;
 import com.rpg.game.menuManager.WelcomeMenu;
+import com.rpg.io.SerializationProvider;
 import com.rpg.util.AsciiArt;
 import com.rpg.util.IOUtil;
 
@@ -13,12 +15,10 @@ import static com.rpg.game.entity.Monster.createDefaultMonster;
 
 public class GameManager {
 
-    private final Character player;
-    private final Character monster;
+    private final Game game;
 
-    public GameManager(Character player, Character monster) {
-        this.player = player;
-        this.monster = monster;
+    public GameManager(Game game) {
+        this.game = game;
     }
 
     public static void launchGame() throws Exception {
@@ -31,6 +31,8 @@ public class GameManager {
                 case START:
                     createGame();
                     break;
+                case RELOAD:
+                    resumeGame();
                 case EXIT:
                     exitGame();
                     break;
@@ -42,18 +44,19 @@ public class GameManager {
 
     public static void createGame() {
 
-        GameManager game = new GameManager(createPlayer(), createMonster());
-        //game.welcomePlayerAndShowPowerStats();
-        game.startGame();
+        GameManager gameManager = new GameManager(new Game(createPlayer(), createMonster()));
+        gameManager.startGame();
     }
 
     public void startGame() {
-        ActionManager actionManager = new ActionManager(player, monster);
+        ActionManager actionManager = new ActionManager(game);
         actionManager.performOperation();
     }
 
     public static void resumeGame() {
-
+        SerializationProvider<Game> serializationProvider = new SerializationProvider<>();
+        GameManager gameManager = new GameManager(serializationProvider.deSerializeObject());
+        gameManager.startGame();
     }
 
     public static void exitGame() {
@@ -64,13 +67,6 @@ public class GameManager {
     public static void endGame() {
         IOUtil.showMessage("You have died.. Game Over");
         System.exit(0);
-    }
-
-    public static void saveGame() {
-    }
-
-    private void welcomePlayerAndShowPowerStats() {
-        IOUtil.showMessage(player.toString());
     }
 
     private static Character createPlayer() {

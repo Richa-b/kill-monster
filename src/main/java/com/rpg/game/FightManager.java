@@ -1,10 +1,8 @@
 package com.rpg.game;
 
 import com.rpg.enums.WeaponType;
+import com.rpg.game.entity.*;
 import com.rpg.game.entity.Character;
-import com.rpg.game.entity.Monster;
-import com.rpg.game.entity.Player;
-import com.rpg.game.entity.Weapon;
 import com.rpg.game.menuManager.FightMenu;
 import com.rpg.game.menuManager.Menu;
 import com.rpg.io.SerializationProvider;
@@ -16,49 +14,54 @@ import java.util.Objects;
 
 public class FightManager {
 
-    private final Character player;
-    private final Character monster;
+    private final Game game;
 
-    public FightManager(Character player, Character monster) {
-        this.player = player;
-        this.monster = monster;
+    public FightManager(Game game) {
+        this.game = game;
     }
 
     public void startFighting() {
         Menu menu = new FightMenu();
-        Player currentPlayer = (Player) player;
+        Player player = (Player) game.getPlayer();
+        Monster monster = (Monster) game.getMonster();
         WeaponType weaponType;
         do {
-            weaponType = (WeaponType) menu.showMenu(currentPlayer);
+            weaponType = (WeaponType) menu.showMenu(player);
             if (Objects.nonNull(weaponType)) {
-                attack(weaponType, monster, player);
-                if (monster.isAlive()) {
-                    attack(selectRandomWeaponForMonster(), player, monster);
-                }
-                displayHp();
-                if (player.isDead()) {
-                    GameManager.endGame();
-                } else {
-                    ((Player) player).receiveCoins();
-                }
-                if (player.isUnarmed()) {
-                    IOUtil.showMessage("You are out of Weapons.. Shop For some weapon to fight");
-                    ShopManager shopManager = new ShopManager(player);
-                    shopManager.startShopping();
-                }
+                fight(weaponType);
             } else {
-                SerializationProvider<Character> serializedObject = new SerializationProvider<>();
-                serializedObject.serializeObject(player);
+                SerializationProvider<Game> serializedObject = new SerializationProvider<>();
+                serializedObject.serializeObject(game);
             }
-        } while (monster.isAlive());
+        } while (monster.isAlive() && weaponType != null);
         if (player.isAlive() && Objects.nonNull(weaponType)) {
-            moveToNextLevel(currentPlayer);
+            moveToNextLevel(player);
+        }
+    }
+
+    private void fight(WeaponType weaponType) {
+        Player player = (Player) game.getPlayer();
+        Monster monster = (Monster) game.getMonster();
+        attack(weaponType, monster, player);
+        if (monster.isAlive()) {
+            attack(selectRandomWeaponForMonster(), player, monster);
+        }
+        displayHp();
+        if (player.isDead()) {
+            GameManager.endGame();
+        } else {
+            player.receiveCoins();
+        }
+        if (player.isUnarmed()) {
+            IOUtil.showMessage("You are out of Weapons.. Shop For some weapon to fight");
+            ShopManager shopManager = new ShopManager(player);
+            shopManager.startShopping();
         }
     }
 
     private void displayHp() {
-        IOUtil.showMessage("Player:: Hp Left " + player.getHp() + "/" + 100);
-        IOUtil.showMessage("Monster:: Hp Left " + monster.getHp() + "/" + 100);
+        IOUtil.showMessage("Player:: Hp Left " + game.getPlayer().getHp());
+        IOUtil.showMessage("Monster:: Hp Left " + game.getMonster().getHp());
     }
 
     private void attack(WeaponType weaponType, Character enemy, Character attacker) {
@@ -72,10 +75,10 @@ public class FightManager {
     }
 
     private WeaponType selectRandomWeaponForMonster() {
-        if (!monster.isUnarmed()) {
-            List<Weapon> weapons = monster.getWeaponList();
+        if (!game.getMonster().isUnarmed()) {
+            List<Weapon> weapons = game.getMonster().getWeaponList();
             int randomIndex = (int) (Math.random() * weapons.size());
-            return monster.getWeaponList().get(randomIndex).getWeaponType();
+            return weapons.get(randomIndex).getWeaponType();
         }
         return null;
     }
@@ -87,7 +90,7 @@ public class FightManager {
             IOUtil.showMessage("Congratulations!!!You have Passed all the levels. Game Over..");
             GameManager.exitGame();
         }
-        ((Monster) monster).increaseMonsterPowerOnLevelUp(currentPlayer.getLevel());
+        ((Monster) game.getMonster()).increaseMonsterPowerOnLevelUp(currentPlayer.getLevel());
         startFighting();
     }
 }
