@@ -11,15 +11,15 @@ import java.util.List;
 
 public class ActionManager {
 
-    private final Character player;
-    private final Character monster;
+    private Character player;
+    private Character monster;
 
     public ActionManager(Character player, Character monster) {
         this.player = player;
         this.monster = monster;
     }
 
-    public void performOperation() throws Exception {
+    public void performOperation() {
         Menu menu = new ActionMenu();
         ActionType actionType;
         do {
@@ -41,22 +41,27 @@ public class ActionManager {
         } while (!ActionType.EXIT.equals(actionType));
     }
 
-    private void fight() throws Exception {
+    private void fight() {
         FightManager fight = new FightManager(player, monster);
         fight.startFighting();
+        stats();
+        inventory();
     }
 
     private void shop() {
         ShopManager shopManager = new ShopManager(player);
         shopManager.startShopping();
+        stats();
+        inventory();
 
     }
 
     private void stats() {
         Player p = (Player) player;
         IOUtil.showMessage("-----------------------------------------");
-        IOUtil.showMessage("You have " + p.getLives() + " lives left.");
+        IOUtil.showMessage("You have " + p.getHp() + " hp left.");
         IOUtil.showMessage("You have " + p.getCoins() + " coins.");
+        IOUtil.showMessage("You are at level " + p.getLevel());
         IOUtil.showMessage("-----------------------------------------");
     }
 

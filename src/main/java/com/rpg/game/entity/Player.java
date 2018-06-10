@@ -8,6 +8,16 @@ import com.rpg.util.KillMonsterConstants;
 public class Player extends Character {
 
     private Integer coins = 0;
+    private Integer level = 1;
+
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public void setCoins(Integer coins) {
         this.coins = coins;
@@ -21,7 +31,7 @@ public class Player extends Character {
     private Player(String name, String description) {
         this.name = name;
         this.description = description;
-        this.lives = KillMonsterConstants.DEFAULT_PLAYER_LIVES;
+        this.hp = KillMonsterConstants.DEFAULT_PLAYER_HP;
         createDefaultWeaponListForPlayer();
     }
 
@@ -34,7 +44,7 @@ public class Player extends Character {
     @Override
     public String toString() {
         return "Hello " + name + ". Welcome!!!! You have" +
-                "\n" + lives + " lives." +
+                "\n" + hp + " hp." +
                 "\n" + coins + " coins." +
                 "\n" + (weaponList.size() > 0 ? "You have weapons" : "OOPS!! " +
                 "You have no weapons for now");
@@ -74,10 +84,18 @@ public class Player extends Character {
         public Player buildDefault() {
             return new Player(this.name, this.description);
         }
-
     }
 
     public void receiveCoins() {
-        coins = coins + (int) (Math.random() * this.getLives() + 1);
+        coins = coins + (int) (Math.random() * this.getHp() + 1);
+    }
+
+    public void decrementCoins(WeaponType weaponType) {
+        coins = coins - weaponType.getCoinsPerWeapon();
+    }
+
+    public void levelUp() {
+        level++;
+        hp = 100;
     }
 }

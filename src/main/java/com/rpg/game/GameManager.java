@@ -13,8 +13,8 @@ import static com.rpg.game.entity.Monster.createDefaultMonster;
 
 public class GameManager {
 
-    private final Character player;
-    private final Character monster;
+    private Character player;
+    private Character monster;
 
     public GameManager(Character player, Character monster) {
         this.player = player;
@@ -40,15 +40,15 @@ public class GameManager {
         } while (EXIT != welcomeMenuType);
     }
 
-    public static void createGame() throws Exception {
+    public static void createGame() {
 
         GameManager game = new GameManager(createPlayer(), createMonster());
         game.welcomePlayerAndShowPowerStats();
         game.startGame();
     }
 
-    public void startGame() throws Exception {
-        ActionManager actionManager = new ActionManager(player,monster);
+    public void startGame() {
+        ActionManager actionManager = new ActionManager(player, monster);
         actionManager.performOperation();
     }
 
@@ -62,7 +62,7 @@ public class GameManager {
     }
 
     public static void endGame() {
-        IOUtil.showMessage("You have died.. GameManager Over");
+        IOUtil.showMessage("You have died.. Game Over");
         System.exit(0);
     }
 
@@ -89,4 +89,5 @@ public class GameManager {
     private static Character createMonster() {
         return createDefaultMonster();
     }
+
 }

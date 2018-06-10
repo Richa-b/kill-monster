@@ -9,18 +9,15 @@ import java.util.Objects;
 
 public class Character {
     protected String name;
-    protected Integer lives;
+    protected Integer hp;
     protected String description;
 
     public void manageDamage(int damage) {
-        lives = lives - damage;
+        hp = hp - damage;
     }
 
     public void manageWeapon(WeaponType weaponType) {
-        Weapon existingWeapon = weaponList.stream()
-                .filter(weapon -> weaponType.equals(weapon.getWeaponType()))
-                .findFirst()
-                .orElse(null);
+        Weapon existingWeapon = getWeaponFromType(weaponType);
         if (Objects.nonNull(existingWeapon)) {
             existingWeapon.setCount(existingWeapon.getCount() - 1);
             if (existingWeapon.getCount() <= 0) {
@@ -29,8 +26,25 @@ public class Character {
         }
     }
 
+    public void addWeapon(WeaponType weaponType) {
+        Weapon existingWeapon = getWeaponFromType(weaponType);
+        if (Objects.nonNull(existingWeapon)) {
+            existingWeapon.setCount(existingWeapon.getCount() + 1);
+        } else {
+            weaponList.add(new Weapon(weaponType, 1));
+        }
+    }
+
+    private Weapon getWeaponFromType(WeaponType weaponType) {
+        return weaponList.stream()
+                .filter(weapon -> weaponType.equals(weapon.getWeaponType()))
+                .findFirst()
+                .orElse(null);
+    }
+
+
     public Boolean isAlive() {
-        return lives > 0;
+        return hp > 0;
     }
 
     public Boolean isUnarmed() {
@@ -38,15 +52,19 @@ public class Character {
     }
 
     public Boolean isDead() {
-        return lives <= 0;
+        return hp <= 0;
+    }
+
+    public Boolean isAboutToDie() {
+        return hp <= 20;
     }
 
     public String getName() {
         return name;
     }
 
-    public Integer getLives() {
-        return lives;
+    public Integer getHp() {
+        return hp;
     }
 
     public String getDescription() {
@@ -61,8 +79,8 @@ public class Character {
         this.name = name;
     }
 
-    public void setLives(Integer lives) {
-        this.lives = lives;
+    public void setHp(Integer hp) {
+        this.hp = hp;
     }
 
     public void setDescription(String description) {
