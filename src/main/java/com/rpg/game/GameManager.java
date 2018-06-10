@@ -13,8 +13,8 @@ import static com.rpg.game.entity.Monster.createDefaultMonster;
 
 public class GameManager {
 
-    private Character player;
-    private Character monster;
+    private final Character player;
+    private final Character monster;
 
     public GameManager(Character player, Character monster) {
         this.player = player;
@@ -67,7 +67,6 @@ public class GameManager {
     }
 
     public static void saveGame() {
-
     }
 
     private void welcomePlayerAndShowPowerStats() {

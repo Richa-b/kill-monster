@@ -2,7 +2,7 @@ package com.rpg.game.menuManager;
 
 
 import com.rpg.enums.WeaponType;
-import com.rpg.game.Weapon;
+import com.rpg.game.entity.Weapon;
 import com.rpg.game.entity.Player;
 import com.rpg.util.IOUtil;
 

@@ -1,7 +1,6 @@
 package com.rpg.game.entity;
 
 import com.rpg.enums.WeaponType;
-import com.rpg.game.Weapon;
 import com.rpg.util.KillMonsterConstants;
 
 import static com.rpg.util.KillMonsterConstants.BASE_MONSTER_HP;
@@ -26,6 +25,11 @@ public class Monster extends Character {
 
     public static Monster createDefaultMonster() {
         return new Monster("Monster Dinosaur", "");
+    }
+
+    public void increaseMonsterPowerOnLevelUp(Integer level){
+        setHp(level);
+        createDefaultWeaponListForMonster(level);
     }
 
     private void createDefaultWeaponListForMonster(Integer currentLevel) {

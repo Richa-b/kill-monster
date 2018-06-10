@@ -1,4 +1,4 @@
-package com.rpg.game;
+package com.rpg.game.entity;
 
 import com.rpg.enums.WeaponType;
 

@@ -3,6 +3,7 @@ package com.rpg.game;
 import com.rpg.enums.ActionType;
 import com.rpg.game.entity.Character;
 import com.rpg.game.entity.Player;
+import com.rpg.game.entity.Weapon;
 import com.rpg.game.menuManager.ActionMenu;
 import com.rpg.game.menuManager.Menu;
 import com.rpg.util.IOUtil;
@@ -11,8 +12,8 @@ import java.util.List;
 
 public class ActionManager {
 
-    private Character player;
-    private Character monster;
+    private final Character player;
+    private final Character monster;
 
     public ActionManager(Character player, Character monster) {
         this.player = player;

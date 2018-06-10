@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class ShopManager {
 
-    private Character player;
+    private final Character player;
 
     public ShopManager(Character player) {
         this.player = player;

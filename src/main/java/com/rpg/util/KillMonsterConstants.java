@@ -19,6 +19,7 @@ public interface KillMonsterConstants {
 
 
     Integer HIGHEST_LEVEL = 5;
+    String FILE_PATH = "";
 
     interface MessageConstants {
 

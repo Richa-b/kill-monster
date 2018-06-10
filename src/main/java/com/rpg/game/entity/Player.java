@@ -1,7 +1,6 @@
 package com.rpg.game.entity;
 
 import com.rpg.enums.WeaponType;
-import com.rpg.game.Weapon;
 import com.rpg.util.KillMonsterConstants;
 
 

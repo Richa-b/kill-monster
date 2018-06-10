@@ -1,13 +1,13 @@
 package com.rpg.game.entity;
 
 import com.rpg.enums.WeaponType;
-import com.rpg.game.Weapon;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Character {
+public class Character implements Serializable {
     protected String name;
     protected Integer hp;
     protected String description;
@@ -48,7 +48,7 @@ public class Character {
     }
 
     public Boolean isUnarmed() {
-        return weaponList.size() == 0;
+        return (Objects.nonNull(weaponList) && weaponList.size() == 0);
     }
 
     public Boolean isDead() {
