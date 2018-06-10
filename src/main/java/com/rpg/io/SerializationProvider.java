@@ -18,18 +18,18 @@ public class SerializationProvider<T extends Serializable> {
         }
     }
 
-    public void deSerializeObject(T object) {
+    public T deSerializeObject() {
+        T object = null;
         try {
             FileInputStream fi = new FileInputStream(new File(KillMonsterConstants.FILE_PATH));
             ObjectInputStream oi = new ObjectInputStream(fi);
             object = (T) oi.readObject();
             oi.close();
             fi.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return object;
     }
 
 }

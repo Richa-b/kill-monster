@@ -43,7 +43,7 @@ public class GameManager {
     public static void createGame() {
 
         GameManager game = new GameManager(createPlayer(), createMonster());
-        game.welcomePlayerAndShowPowerStats();
+        //game.welcomePlayerAndShowPowerStats();
         game.startGame();
     }
 

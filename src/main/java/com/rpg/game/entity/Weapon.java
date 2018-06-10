@@ -2,7 +2,9 @@ package com.rpg.game.entity;
 
 import com.rpg.enums.WeaponType;
 
-public class Weapon {
+import java.io.Serializable;
+
+public class Weapon implements Serializable{
 
     private WeaponType weaponType;
     private Integer count;

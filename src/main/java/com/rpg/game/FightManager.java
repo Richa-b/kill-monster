@@ -7,6 +7,7 @@ import com.rpg.game.entity.Player;
 import com.rpg.game.entity.Weapon;
 import com.rpg.game.menuManager.FightMenu;
 import com.rpg.game.menuManager.Menu;
+import com.rpg.io.SerializationProvider;
 import com.rpg.util.IOUtil;
 import com.rpg.util.KillMonsterConstants;
 
@@ -46,7 +47,8 @@ public class FightManager {
                     shopManager.startShopping();
                 }
             } else {
-                //TODO: save the game
+                SerializationProvider<Character> serializedObject = new SerializationProvider<>();
+                serializedObject.serializeObject(player);
             }
         } while (monster.isAlive());
         if (player.isAlive() && Objects.nonNull(weaponType)) {

@@ -40,7 +40,7 @@ public class Player extends Character {
         weaponList.add(new Weapon(WeaponType.KNIFE, KillMonsterConstants.DEFAULT_PLAYER_KNIFE_COUNT));
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Hello " + name + ". Welcome!!!! You have" +
                 "\n" + hp + " hp." +
@@ -48,7 +48,7 @@ public class Player extends Character {
                 "\n" + (weaponList.size() > 0 ? "You have weapons" : "OOPS!! " +
                 "You have no weapons for now");
     }
-
+*/
     public static PlayerBuilder builder() {
         return new PlayerBuilder();
     }

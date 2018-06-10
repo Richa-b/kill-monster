@@ -19,7 +19,7 @@ public interface KillMonsterConstants {
 
 
     Integer HIGHEST_LEVEL = 5;
-    String FILE_PATH = "";
+    String FILE_PATH = "saveInfo.txt";
 
     interface MessageConstants {
 
